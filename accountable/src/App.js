@@ -9,29 +9,32 @@ import { AppBox, Content, Title, BossBlock, BossImage, BubbleText, BossBubble, Q
 // import Timer from "./Timer";
 
 class App extends Component {
-  not2 = () => toast("7 Kingdoms", { autoClose: 7000 });
+  // not2 = () => toast("7 Kingdoms", { autoClose: 7000 });
 
   constructor() {
     super();
     this.setCountdown = this.setCountdown.bind(this);
     this.launch = this.launch.bind(this);
-    this.showNotifications = this.showNotifications.bind(this);
-    this.handleNotClick = this.handleNotClick.bind(this);
-    
+    // this.showNotifications = this.showNotifications.bind(this);
+    // this.handleNotClick = this.handleNotClick.bind(this);
+    this.timer = 0;
+    this.startTimer = this.startTimer.bind(this);
+    this.countDown = this.countDown.bind(this);
     this.state = {
-      time: 0,
+      time: {},
+      seconds: null,
       activity: "",
     };
   }
 
-  showNotifications() {
-    // If the Notifications API is supported by the browser
-    if(this.n.supported()) {this.n.show()}else {console.log("oops")};
-  }
-  handleNotClick(event) {
-    console.log("Notification Clicked")
-    this.n.close(event.target.tag);
-  }
+  // showNotifications() {
+  //   // If the Notifications API is supported by the browser
+  //   if(this.n.supported()) {this.n.show()}else {console.log("oops")};
+  // }
+  // handleNotClick(event) {
+  //   console.log("Notification Clicked")
+  //   this.n.close(event.target.tag);
+  // }
 
   handleChange(event) {
     this.setState({ time: event.target.value })
@@ -45,13 +48,56 @@ class App extends Component {
     console.log("time", this.state.time);
     console.log("activity", this.state.activity);
     this.setCountdown()
-    // this.setState({ activity: document.getElementById("activity").value })
-    // this.setState({ time: document.getElementById("time").value })
   }
 
   setCountdown() {
     console.log("setCountdown", this.state.time);
+
   };
+
+  // ======= C O U N T D O W N =======
+
+  secondsToTime(secs){
+    let hours = Math.floor(secs / (60 * 60));
+
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+
+    let obj = {
+      "h": hours,
+      "m": minutes,
+      "s": seconds
+    };
+    return obj;
+  }
+
+  componentDidMount() {
+    let timeLeftVar = this.secondsToTime(this.state.seconds);
+    this.setState({ time: timeLeftVar });
+  }
+
+  startTimer() {
+    if (this.timer == 0) {
+      this.timer = setInterval(this.countDown, 1000);
+    }
+  }
+
+  countDown() {
+    // Remove one second, set state so a re-render happens.
+    let seconds = this.state.seconds - 1;
+    this.setState({
+      time: this.secondsToTime(seconds),
+      seconds: seconds,
+    });
+    
+    // Check if we're at zero.
+    if (seconds == 0) { 
+      clearInterval(this.timer);
+    }
+  }
 
 
   render() {
@@ -106,6 +152,9 @@ class App extends Component {
             {/* <Timer 
             remainingMinutes={this.state.time}/> */}
           </QuestionBlock>
+
+          <button onClick={this.startTimer}>Start</button>
+        m: {this.state.time.m} s: {this.state.time.s}
 
         </Content>
         <ToastContainer />
