@@ -3,19 +3,20 @@ import React, { Component } from 'react';
 // import styled from "styled-components";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// https://www.npmjs.com/package/react-toastify
+import ReactNotifications from 'react-browser-notifications';
 import { AppBox, Content, Title, BossBlock, BossImage, BubbleText, BossBubble, QuestionBlock, Question, Input, Button } from './components';
+// import Timer from "./Timer";
 
 class App extends Component {
-  // NOTIFYING
-  notify = () => toast("Wow so easy !");
   not2 = () => toast("7 Kingdoms", { autoClose: 7000 });
 
   constructor() {
     super();
     this.setCountdown = this.setCountdown.bind(this);
     this.launch = this.launch.bind(this);
-    // this.activityValue = document.getElementById("activity").value;
-    // this.timeValue = document.getElementById("time").value;
+    this.showNotifications = this.showNotifications.bind(this);
+    this.handleNotClick = this.handleNotClick.bind(this);
     
     this.state = {
       time: 0,
@@ -23,11 +24,14 @@ class App extends Component {
     };
   }
 
-
-
-  setCountdown() {
-    console.log("setCountdown", this.state.time);
-  };
+  showNotifications() {
+    // If the Notifications API is supported by the browser
+    if(this.n.supported()) {this.n.show()}else {console.log("oops")};
+  }
+  handleNotClick(event) {
+    console.log("Notification Clicked")
+    this.n.close(event.target.tag);
+  }
 
   handleChange(event) {
     this.setState({ time: event.target.value })
@@ -41,19 +45,29 @@ class App extends Component {
     console.log("time", this.state.time);
     console.log("activity", this.state.activity);
     this.setCountdown()
-    this.notify()
     // this.setState({ activity: document.getElementById("activity").value })
     // this.setState({ time: document.getElementById("time").value })
   }
 
-  componentDidMount() {
-    
-  }
+  setCountdown() {
+    console.log("setCountdown", this.state.time);
+  };
 
 
   render() {
     return (
       <AppBox>
+
+        <ReactNotifications
+          onRef={ref => (this.n = ref)} // Required
+          title="Hey There!" // Required
+          body="This is the body"
+          icon=""
+          tag="abcdef"
+          timeout="2000"
+          onClick={event => this.handleNotClick(event)}
+        />
+
         <Title>Fucking do it now</Title>
 
         <Content>
@@ -82,11 +96,15 @@ class App extends Component {
               onChange={this.handleChange.bind(this)}>
             </Input>
             <Button
-              // onClick={this.launch}
-              onClick={this.not2} >
+              onClick={this.launch}
+              // onClick={this.not2} 
+              // onClick={this.showNotifications}
+              >
               Let's do it
               
             </Button>
+            {/* <Timer 
+            remainingMinutes={this.state.time}/> */}
           </QuestionBlock>
 
         </Content>
