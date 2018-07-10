@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // https://www.npmjs.com/package/react-toastify
-import ReactNotifications from 'react-browser-notifications';
+import Notifier from "react-desktop-notification"
 import { AppBox, Content, Title, BossBlock, BossImage, BubbleText, BossBubble, QuestionBlock, Question, Input, Button } from './components';
 
 class App extends Component {
@@ -10,6 +10,9 @@ class App extends Component {
 
   constructor() {
     super();
+    this.showNotifications = this.showNotifications.bind(this);
+    this.handleNot = this.handleNot.bind(this);
+
     this.updateDisplayedTime = this.updateDisplayedTime.bind(this);
     this.takeOutOneSec = this.takeOutOneSec.bind(this);
     this.getTimeRemaining = this.getTimeRemaining.bind(this);
@@ -24,10 +27,29 @@ class App extends Component {
     };
   }
 
-  // Convert to seconds
-  getTimeRemaining() {
-    console.log("hours", this.state.hours)
-    console.log("minutes", this.state.minutes)
+  showNotifications() {
+    if(this.n.supported()) this.n.show();
+  }
+
+  handleNot(event) {
+    window.focus()
+    this.n.close(event.target.tag);
+  }
+
+  gotNewNotification(){
+    //Here will pop a notifier and always open in a new window when clicked.
+    Notifier.start("Hey you!","Get your shit together!","","https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png");
+    
+  }
+
+
+
+  // =============== C O U N T D OW N ==================
+
+  getTimeRemaining() { // Convert to seconds
+    // Preventing the weird shit when not defined
+    if(this.state.hours==="") {this.setState({ hours: 0 })}
+    if(this.state.minutes==="") {this.setState({ minutes: 0 })}
     var minutesConverted = Math.floor(this.state.minutes * 60);
     var hoursConverted = Math.floor((this.state.hours * 60) * 60);
     var seconds = Math.floor(minutesConverted + hoursConverted);
@@ -47,13 +69,12 @@ class App extends Component {
       return
     } else {
       this.setState({ seconds: this.state.seconds-1 })
-      // take out, now update the displayed state
       this.updateDisplayedTime()
     }  
   }
 
   updateDisplayedTime() {
-    console.log("TOTAL MOINS 1", this.state.seconds)
+    // console.log("TOTAL MOINS 1", this.state.seconds)
     let remainingMinutes = Math.floor(this.state.seconds / 60);
     let remainingSeconds = this.state.seconds % 60;
     this.setState({
@@ -64,6 +85,7 @@ class App extends Component {
     setTimeout(this.takeOutOneSec, 1000)
   }
 
+  // =============== O N C H A N G E ==================
 
   handleChange(event) {
     this.setState({ hours: event.target.value }, () => {
@@ -79,24 +101,10 @@ class App extends Component {
     this.setState({ activity: event.target.value })
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.setTimeoutId);
-  }
-
 
   render() {
     return (
       <AppBox>
-
-        <ReactNotifications
-          onRef={ref => (this.n = ref)} // Required
-          title="Hey There!" // Required
-          body="This is the body"
-          icon=""
-          tag="abcdef"
-          timeout="2000"
-          onClick={event => this.handleNotClick(event)}
-        />
 
         <Title>Fucking do it now</Title>
 
@@ -144,9 +152,7 @@ class App extends Component {
           </QuestionBlock>
 
           <p>countdown</p>
-          {/* <p>{countDown}</p> */}
-
-          <div className='font-weight-bold lead number-display'>
+          <div>
             {
               this.state.remainingMinutes > 9 ?
                 this.state.remainingMinutes : '0' + this.state.remainingMinutes
@@ -155,12 +161,12 @@ class App extends Component {
                 this.state.remainingSeconds : '0' + this.state.remainingSeconds
             }
           </div>
-
-          {/* <button onClick={this.startTimer}>Start</button>
-          m: {this.state.time.m} s: {this.state.time.s} */}
+        <button onClick={this.gotNewNotification}>
+          Notify
+        </button>
 
         </Content>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </AppBox>
     );
   }
