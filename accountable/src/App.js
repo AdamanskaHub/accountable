@@ -1,102 +1,86 @@
 import React, { Component } from 'react';
-// import './App.css';
-// import styled from "styled-components";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // https://www.npmjs.com/package/react-toastify
 import ReactNotifications from 'react-browser-notifications';
 import { AppBox, Content, Title, BossBlock, BossImage, BubbleText, BossBubble, QuestionBlock, Question, Input, Button } from './components';
-// import Timer from "./Timer";
 
 class App extends Component {
   // not2 = () => toast("7 Kingdoms", { autoClose: 7000 });
 
   constructor() {
     super();
-    this.setCountdown = this.setCountdown.bind(this);
-    this.launch = this.launch.bind(this);
-    // this.showNotifications = this.showNotifications.bind(this);
-    // this.handleNotClick = this.handleNotClick.bind(this);
-    this.timer = 0;
-    this.startTimer = this.startTimer.bind(this);
-    this.countDown = this.countDown.bind(this);
+    this.updateDisplayedTime = this.updateDisplayedTime.bind(this);
+    this.takeOutOneSec = this.takeOutOneSec.bind(this);
+    this.getTimeRemaining = this.getTimeRemaining.bind(this);
     this.state = {
-      time: {},
-      seconds: null,
+      // time: {},
+      seconds: 0,
+      hours: "",
+      minutes: "",
       activity: "",
+      remainingMinutes: 0,
+      remainingSeconds: 0
     };
   }
 
-  // showNotifications() {
-  //   // If the Notifications API is supported by the browser
-  //   if(this.n.supported()) {this.n.show()}else {console.log("oops")};
-  // }
-  // handleNotClick(event) {
-  //   console.log("Notification Clicked")
-  //   this.n.close(event.target.tag);
-  // }
+  // Convert to seconds
+  getTimeRemaining() {
+    console.log("hours", this.state.hours)
+    console.log("minutes", this.state.minutes)
+    var minutesConverted = Math.floor(this.state.minutes * 60);
+    var hoursConverted = Math.floor((this.state.hours * 60) * 60);
+    var seconds = Math.floor(minutesConverted + hoursConverted);
+    // seconds becomes all the seconds
+    this.setState({ seconds: seconds }, () => {
+      console.log("TOTAL", this.state.seconds)
+    });
+    // After one second take out one second
+    setTimeout(this.takeOutOneSec, 1000)
+  }
+
+  takeOutOneSec() {
+    if (this.state.seconds===0) {
+      console.log("TIME UP")
+      this.setState({ minutes: "" })
+      this.setState({ hours: "" })
+      return
+    } else {
+      this.setState({ seconds: this.state.seconds-1 })
+      // take out, now update the displayed state
+      this.updateDisplayedTime()
+    }  
+  }
+
+  updateDisplayedTime() {
+    console.log("TOTAL MOINS 1", this.state.seconds)
+    let remainingMinutes = Math.floor(this.state.seconds / 60);
+    let remainingSeconds = this.state.seconds % 60;
+    this.setState({
+      remainingMinutes,
+      remainingSeconds
+    });
+    // It's set with updated time, now let's do it again
+    setTimeout(this.takeOutOneSec, 1000)
+  }
+
 
   handleChange(event) {
-    this.setState({ time: event.target.value })
+    this.setState({ hours: event.target.value }, () => {
+      console.log(this.state.hours)
+    });
+  }
+  handleChangeMin(event) {
+    this.setState({ minutes: event.target.value }, () => {
+      console.log(this.state.minutes)
+    });
   }
   handleChangeActivity(event) {
     this.setState({ activity: event.target.value })
   }
 
-  launch() {
-    console.log("LAUNCH");
-    console.log("time", this.state.time);
-    console.log("activity", this.state.activity);
-    this.setCountdown()
-  }
-
-  setCountdown() {
-    console.log("setCountdown", this.state.time);
-
-  };
-
-  // ======= C O U N T D O W N =======
-
-  secondsToTime(secs){
-    let hours = Math.floor(secs / (60 * 60));
-
-    let divisor_for_minutes = secs % (60 * 60);
-    let minutes = Math.floor(divisor_for_minutes / 60);
-
-    let divisor_for_seconds = divisor_for_minutes % 60;
-    let seconds = Math.ceil(divisor_for_seconds);
-
-    let obj = {
-      "h": hours,
-      "m": minutes,
-      "s": seconds
-    };
-    return obj;
-  }
-
-  componentDidMount() {
-    let timeLeftVar = this.secondsToTime(this.state.seconds);
-    this.setState({ time: timeLeftVar });
-  }
-
-  startTimer() {
-    if (this.timer == 0) {
-      this.timer = setInterval(this.countDown, 1000);
-    }
-  }
-
-  countDown() {
-    // Remove one second, set state so a re-render happens.
-    let seconds = this.state.seconds - 1;
-    this.setState({
-      time: this.secondsToTime(seconds),
-      seconds: seconds,
-    });
-    
-    // Check if we're at zero.
-    if (seconds == 0) { 
-      clearInterval(this.timer);
-    }
+  componentWillUnmount() {
+    clearTimeout(this.setTimeoutId);
   }
 
 
@@ -123,8 +107,8 @@ class App extends Component {
               <BubbleText>Some bubble text screamed here!</BubbleText>
             </BossBubble>
             <BossImage
-              src="https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png" alt="Boss" 
-              />
+              src="https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png" alt="Boss"
+            />
 
           </BossBlock>
 
@@ -135,26 +119,45 @@ class App extends Component {
               value={this.state.activity}
               onChange={this.handleChangeActivity.bind(this)}>
             </Input>
+
             <Question>For the next</Question>
             <Input
-              id="time" type="number"
-              value={this.state.time}
+              id="hours" type="number"
+              value={this.state.hours}
               onChange={this.handleChange.bind(this)}>
             </Input>
+            <Input
+              id="minutes" type="number"
+              value={this.state.minutes}
+              onChange={this.handleChangeMin.bind(this)}>
+            </Input>
             <Button
-              onClick={this.launch}
-              // onClick={this.not2} 
-              // onClick={this.showNotifications}
-              >
+              onClick={this.getTimeRemaining}
+            // onClick={this.not2} 
+            // onClick={this.showNotifications}
+            >
               Let's do it
-              
+  
             </Button>
             {/* <Timer 
             remainingMinutes={this.state.time}/> */}
           </QuestionBlock>
 
-          <button onClick={this.startTimer}>Start</button>
-        m: {this.state.time.m} s: {this.state.time.s}
+          <p>countdown</p>
+          {/* <p>{countDown}</p> */}
+
+          <div className='font-weight-bold lead number-display'>
+            {
+              this.state.remainingMinutes > 9 ?
+                this.state.remainingMinutes : '0' + this.state.remainingMinutes
+            }:{
+              this.state.remainingSeconds > 9 ?
+                this.state.remainingSeconds : '0' + this.state.remainingSeconds
+            }
+          </div>
+
+          {/* <button onClick={this.startTimer}>Start</button>
+          m: {this.state.time.m} s: {this.state.time.s} */}
 
         </Content>
         <ToastContainer />
