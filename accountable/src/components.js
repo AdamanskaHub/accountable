@@ -20,7 +20,7 @@ export const Title = styled.h1`
     text-align: center;
 `;
 
-export const BossBlock = styled.div`
+export const Container = styled.div`
     display: flex;
     flex-direction: column;
 `;

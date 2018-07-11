@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 // https://www.npmjs.com/package/react-toastify
 import Notifier from "react-desktop-notification"
-import { AppBox, Content, Title, BossBlock, BossImage, BubbleText, BossBubble, QuestionBlock, Question, Input, Button } from './components';
+import {
+  AppBox, Content, Title, Container,
+  BossImage, BubbleText, BossBubble, QuestionBlock,
+  Question, Input, Button
+} from './components';
 
 class App extends Component {
   // not2 = () => toast("7 Kingdoms", { autoClose: 7000 });
-
   constructor() {
     super();
     this.showNotifications = this.showNotifications.bind(this);
@@ -16,19 +19,28 @@ class App extends Component {
     this.updateDisplayedTime = this.updateDisplayedTime.bind(this);
     this.takeOutOneSec = this.takeOutOneSec.bind(this);
     this.getTimeRemaining = this.getTimeRemaining.bind(this);
+
     this.state = {
-      // time: {},
       seconds: 0,
       hours: "",
       minutes: "",
       activity: "",
       remainingMinutes: 0,
-      remainingSeconds: 0
+      remainingSeconds: 0,
+      intro: []
     };
   }
 
+  componentDidMount () {
+    // Simulate API response
+    const intro = [
+      "Are you ready to give it your all?",
+    ]
+    this.setState({ intro })
+  }
+
   showNotifications() {
-    if(this.n.supported()) this.n.show();
+    if (this.n.supported()) this.n.show();
   }
 
   handleNot(event) {
@@ -36,10 +48,10 @@ class App extends Component {
     this.n.close(event.target.tag);
   }
 
-  gotNewNotification(){
-    //Here will pop a notifier and always open in a new window when clicked.
-    Notifier.start("Hey you!","Get your shit together!","","https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png");
-    
+  // =============== P O P U P ==================
+
+  gotNewNotification(title, text, img) { // empty is target webaddress
+    Notifier.start("Hey you!", "Get your shit together!", "", "https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png");
   }
 
 
@@ -48,8 +60,8 @@ class App extends Component {
 
   getTimeRemaining() { // Convert to seconds
     // Preventing the weird shit when not defined
-    if(this.state.hours==="") {this.setState({ hours: 0 })}
-    if(this.state.minutes==="") {this.setState({ minutes: 0 })}
+    if (this.state.hours === "") { this.setState({ hours: 0 }) }
+    if (this.state.minutes === "") { this.setState({ minutes: 0 }) }
     var minutesConverted = Math.floor(this.state.minutes * 60);
     var hoursConverted = Math.floor((this.state.hours * 60) * 60);
     var seconds = Math.floor(minutesConverted + hoursConverted);
@@ -62,15 +74,15 @@ class App extends Component {
   }
 
   takeOutOneSec() {
-    if (this.state.seconds===0) {
+    if (this.state.seconds === 0) {
       console.log("TIME UP")
       this.setState({ minutes: "" })
       this.setState({ hours: "" })
       return
     } else {
-      this.setState({ seconds: this.state.seconds-1 })
+      this.setState({ seconds: this.state.seconds - 1 })
       this.updateDisplayedTime()
-    }  
+    }
   }
 
   updateDisplayedTime() {
@@ -110,15 +122,14 @@ class App extends Component {
 
         <Content>
 
-          <BossBlock>
+          <Container>
             <BossBubble>
-              <BubbleText>Some bubble text screamed here!</BubbleText>
+              <BubbleText>{this.state.intro}</BubbleText>
             </BossBubble>
             <BossImage
               src="https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png" alt="Boss"
             />
-
-          </BossBlock>
+          </Container>
 
           <QuestionBlock>
             <Question>I need to...</Question>
@@ -140,18 +151,11 @@ class App extends Component {
               onChange={this.handleChangeMin.bind(this)}>
             </Input>
             <Button
-              onClick={this.getTimeRemaining}
-            // onClick={this.not2} 
-            // onClick={this.showNotifications}
-            >
+              onClick={this.getTimeRemaining}>
               Let's do it
-  
             </Button>
-            {/* <Timer 
-            remainingMinutes={this.state.time}/> */}
           </QuestionBlock>
 
-          <p>countdown</p>
           <div>
             {
               this.state.remainingMinutes > 9 ?
@@ -161,9 +165,9 @@ class App extends Component {
                 this.state.remainingSeconds : '0' + this.state.remainingSeconds
             }
           </div>
-        <button onClick={this.gotNewNotification}>
-          Notify
-        </button>
+          <button onClick={this.gotNewNotification}>
+            Notify
+          </button>
 
         </Content>
         {/* <ToastContainer /> */}
