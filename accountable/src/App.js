@@ -15,16 +15,13 @@ let activeTab = true;
 if (typeof document.hidden !== "undefined") {
   hidden = "hidden";
   visibilityChange = "visibilitychange";
-}
-else if (typeof document.mozHidden !== "undefined") {
+} else if (typeof document.mozHidden !== "undefined") {
   hidden = "mozHidden";
   visibilityChange = "mozvisibilitychange";
-}
-else if (typeof document.msHidden !== "undefined") {
+} else if (typeof document.msHidden !== "undefined") {
   hidden = "msHidden";
   visibilityChange = "msvisibilitychange";
-}
-else if (typeof document.webkitHidden !== "undefined") {
+} else if (typeof document.webkitHidden !== "undefined") {
   hidden = "webkitHidden";
   visibilityChange = "webkitvisibilitychange";
 }
@@ -32,25 +29,17 @@ else if (typeof document.webkitHidden !== "undefined") {
 function handleVisibilityChange() {
   if (document[hidden]) {
     //Not visible, Do whatever
-    console.log("HIDDEN")
-    //changeActiveTab()
     activeTab=false;
-    console.log(activeTab)
-  }
-  else {
+  } else {
     //Visible
-    console.log("VISIBLE")
-    // changeActiveTab()
     activeTab=true;
-    console.log(activeTab)
   }
 }
 
 if (typeof document.addEventListener === "undefined" ||
   typeof document[hidden] === "undefined") {
   //alert("This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.");
-}
-else {
+} else {
   document.addEventListener(visibilityChange, handleVisibilityChange, false);
 }
 
