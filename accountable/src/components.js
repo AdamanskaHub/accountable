@@ -18,6 +18,7 @@ export const Content = styled.div`
 export const Title = styled.h1`
     margin-bottom: 60px;
     text-align: center;
+    font-family: Kalam, cursive;
 `;
 
 export const Container = styled.div`
@@ -37,6 +38,7 @@ export const BossBubble = styled.div`
 `;
 
 export const BubbleText = styled.p`
+    font-family: Caveat, cursive;
 `;
 
 export const QuestionBlock = styled.div`

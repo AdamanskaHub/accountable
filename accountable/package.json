@@ -9,7 +9,11 @@
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
     "react-toastify": "^4.1.0",
-    "styled-components": "^3.3.3"
+    "styled-components": "^3.3.3",
+    "typeface-caveat": "0.0.54",
+    "typeface-kalam": "0.0.54",
+    "typeface-knewave": "0.0.54",
+    "typeface-permanent-marker": "0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
