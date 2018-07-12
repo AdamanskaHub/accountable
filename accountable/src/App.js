@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 import Notifier from "react-desktop-notification"
 import {
   AppBox, Content, Title, Container,
-  BossImage, BubbleText, BossBubble, QuestionBlock,
-  Question, Input, Button
+  BossImage, BubbleText, BossBubble, Triangle, QuestionBlock,
+  Question, TextInput, TimeInputs, Extra, Input, Button, CountDown,
 } from './components';
 
 
@@ -29,10 +29,10 @@ if (typeof document.hidden !== "undefined") {
 function handleVisibilityChange() {
   if (document[hidden]) {
     //Not visible, Do whatever
-    activeTab=false;
+    activeTab = false;
   } else {
     //Visible
-    activeTab=true;
+    activeTab = true;
   }
 }
 
@@ -140,7 +140,7 @@ class App extends Component {
     console.log(activeTab)
     // After one second take out one second
     setTimeout(this.takeOutOneSec, 1000)
-    
+
   }
 
   takeOutOneSec() {
@@ -178,10 +178,10 @@ class App extends Component {
   textChoice(choice) {
     let random = this.state[choice][Math.floor(Math.random() * this.state[choice].length)];
     this.setState({ selected: random })
-    if (activeTab===false) {
+    if (activeTab === false) {
       this.gotNewNotification(random, "https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png")
     }
-    
+
   }
 
   // =============== O N C H A N G E ==================
@@ -192,9 +192,7 @@ class App extends Component {
     });
   }
   handleChangeMin(event) {
-    this.setState({ minutes: event.target.value }, () => {
-      console.log(this.state.minutes)
-    });
+    this.setState({ minutes: event.target.value });
   }
   handleChangeActivity(event) {
     this.setState({ activity: event.target.value })
@@ -214,6 +212,7 @@ class App extends Component {
             <BossBubble>
               <BubbleText>{this.state.selected}</BubbleText>
             </BossBubble>
+            <Triangle></Triangle>
             <BossImage
               src="https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png" alt="Boss"
             />
@@ -221,36 +220,40 @@ class App extends Component {
 
           <QuestionBlock>
             <Question>I need to...</Question>
-            <Input
+            <TextInput
               id="activity" type="text"
               value={this.state.activity}
               onChange={this.handleChangeActivity.bind(this)}>
-            </Input>
+            </TextInput>
 
             <Question>For the next</Question>
-            <Input
-              id="hours" type="number"
-              value={this.state.hours}
-              onChange={this.handleChange.bind(this)}>
-            </Input>
-            <Input
-              id="minutes" type="number"
-              value={this.state.minutes}
-              onChange={this.handleChangeMin.bind(this)}>
-            </Input>
-            <Button
-              onClick={this.getTimeRemaining}>
+            <TimeInputs>
+              <Input
+                id="hours" type="number"
+                value={this.state.hours}
+                onChange={this.handleChange.bind(this)}>
+              </Input>
+              <Extra>Hours</Extra>
+              <Input
+                id="minutes" type="number"
+                value={this.state.minutes}
+                onChange={this.handleChangeMin.bind(this)}>
+              </Input>
+              <Extra>Minutes</Extra>
+            </TimeInputs>
+            <Button onClick={this.getTimeRemaining}>
               Let's do it
             </Button>
+            <CountDown>
+              {this.state.remainingMinutes > 9 ?
+                this.state.remainingMinutes : '0' + this.state.remainingMinutes
+              }:{
+                this.state.remainingSeconds > 9 ?
+                  this.state.remainingSeconds : '0' + this.state.remainingSeconds}
+            </CountDown>
           </QuestionBlock>
 
-          <div>
-            {this.state.remainingMinutes > 9 ?
-              this.state.remainingMinutes : '0' + this.state.remainingMinutes
-            }:{
-              this.state.remainingSeconds > 9 ?
-                this.state.remainingSeconds : '0' + this.state.remainingSeconds}
-          </div>
+
 
         </Content>
         {/* <ToastContainer /> */}
