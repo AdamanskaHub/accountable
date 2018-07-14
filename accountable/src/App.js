@@ -182,7 +182,7 @@ class App extends Component {
     let random = this.state[choice][Math.floor(Math.random() * this.state[choice].length)];
     this.setState({ selected: random })
     if (activeTab === false) {
-      this.gotNewNotification(random, "./img/bossywizard.png")
+      this.gotNewNotification(random, "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/bossywizard.png")
     }
 
   }
