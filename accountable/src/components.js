@@ -162,10 +162,22 @@ export const Button = styled.button`
     background-color: #4F21AD;
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.4);
     color: #fff;
-    &:hover {
-        background-color: #D49AFF; 
-        box-shadow: none;
+    &::before {
+        transform: translate(-120%,-50%) translateZ(0)
     }
+    
+
+  &:hover{
+    &::before {
+        transform: translate(-45%,-34%) translateZ(0)
+      }
+  }
+ 
+    
+    // &:hover {
+    //     background-color: #D49AFF; 
+    //     box-shadow: none;
+    // }
 `;
 
 export const DoIt = styled.h3`

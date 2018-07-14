@@ -6,6 +6,7 @@ import CloudImg3 from "./img/cloud3.png";
 import CloudImg4 from "./img/cloud4.png";
 import CloudImg5 from "./img/cloud5.png";
 import Wizard from "./img/bossywizard.png";
+// "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/bossywizard.png"
 import {
   MainBox, AppBox,
   CloudsBox, Cloud1, Cloud2, Cloud3, Cloud4, Cloud5,
@@ -182,7 +183,7 @@ class App extends Component {
     let random = this.state[choice][Math.floor(Math.random() * this.state[choice].length)];
     this.setState({ selected: random })
     if (activeTab === false) {
-      this.gotNewNotification(random, "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/bossywizard.png")
+      this.gotNewNotification(random, "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/wizardhead.png")
     }
 
   }
@@ -269,10 +270,6 @@ class App extends Component {
                 </CountDown>
               </ QuestionBlock>
             }
-
-
-
-
 
           </Content>
         </AppBox>
