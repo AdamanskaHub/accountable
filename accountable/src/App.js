@@ -6,10 +6,11 @@ import CloudImg3 from "./img/cloud3.png";
 import CloudImg4 from "./img/cloud4.png";
 import CloudImg5 from "./img/cloud5.png";
 import Wizard from "./img/bossywizard.png";
-import { MainBox, AppBox, 
-  CloudsBox, Cloud1, Cloud2, Cloud3, Cloud4, Cloud5, 
+import {
+  MainBox, AppBox,
+  CloudsBox, Cloud1, Cloud2, Cloud3, Cloud4, Cloud5,
   Content, Title, Container,
-  BossImage, BubbleText, BossBubble, Triangle, QuestionBlock,
+  BossImage, BubbleText, BossBubble, Triangle, QuestionBlock, QuestionBG,
   Question, TextInput, TimeInputs, Extra, Input, Button, CountDown, DoIt,
 } from './components';
 
@@ -75,7 +76,7 @@ class App extends Component {
       dialog: [],
       wellDone: [],
       almostTimeUp: [],
-      selected: "Welcome.",
+      selected: "I hope you're ready to act.",
       countingDown: false,
     };
   }
@@ -85,6 +86,7 @@ class App extends Component {
     const intro = [ //smile
       "Are you ready to give it your all?",
       "Glad to see you're ready to work.",
+      "Less talk more action.",
     ]
     this.setState({ intro })
 
@@ -180,7 +182,7 @@ class App extends Component {
     let random = this.state[choice][Math.floor(Math.random() * this.state[choice].length)];
     this.setState({ selected: random })
     if (activeTab === false) {
-      this.gotNewNotification(random, "https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png")
+      this.gotNewNotification(random, "./img/bossywizard.png")
     }
 
   }
@@ -211,69 +213,69 @@ class App extends Component {
           <Cloud4 src={CloudImg4} alt="cloud"/>
           <Cloud5 src={CloudImg5} alt="cloud"/> 
         </CloudsBox> */}
-      <AppBox>
-        
-        <Title>Fucking do it now</Title>
+        <AppBox>
 
-        <Content>
+          <Title>Fucking do it now</Title>
 
-          <Container>
-            <BossBubble>
-              <BubbleText>{this.state.selected}</BubbleText>
-            </BossBubble>
-            <Triangle></Triangle>
-            <BossImage src={Wizard} alt="Wizard"
+          <Content>
+
+            <Container>
+              <BossBubble>
+                <BubbleText>{this.state.selected}</BubbleText>
+              </BossBubble>
+              <Triangle></Triangle>
+              <BossImage src={Wizard} alt="Wizard"
               //https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png 
               />
-          </Container>
+            </Container>
 
-          {!this.state.countingDown ?
-            <QuestionBlock>
-              <Question>I need to...</Question>
-              <TextInput
-                id="activity" type="text"
-                value={this.state.activity}
-                onChange={this.handleChangeActivity.bind(this)}>
-              </TextInput>
+            {!this.state.countingDown ?
+              <QuestionBlock>
+                <QuestionBG>
+                <Question>I need to...</Question>
+                <TextInput
+                  id="activity" type="text"
+                  value={this.state.activity}
+                  onChange={this.handleChangeActivity.bind(this)}>
+                </TextInput>
 
-              <Question>For the next</Question>
-              <TimeInputs>
-                <Input
-                  id="hours" type="number"
-                  value={this.state.hours}
-                  onChange={this.handleChange.bind(this)}>
-                </Input>
-                <Extra>Hours</Extra>
-                <Input
-                  id="minutes" type="number"
-                  value={this.state.minutes}
-                  onChange={this.handleChangeMin.bind(this)}>
-                </Input>
-                <Extra>Minutes</Extra>
-              </TimeInputs>
-              <Button onClick={this.getTimeRemaining}>
-                Let's do it
-          </Button>
-            </QuestionBlock>
-            :
-            <QuestionBlock>
-              <DoIt>I need to {this.state.activity}</DoIt>
-              <CountDown>
-                {this.state.remainingMinutes > 9 ?
-                  this.state.remainingMinutes : '0' + this.state.remainingMinutes
-                }:{
-                  this.state.remainingSeconds > 9 ?
-                    this.state.remainingSeconds : '0' + this.state.remainingSeconds}
-              </CountDown>
-            </ QuestionBlock>
-          }
-
-
+                <Question>For the next</Question>
+                <TimeInputs>
+                  <Input
+                    id="hours" type="number"
+                    value={this.state.hours}
+                    onChange={this.handleChange.bind(this)}>
+                  </Input>
+                  <Extra>Hours</Extra>
+                  <Input
+                    id="minutes" type="number"
+                    value={this.state.minutes}
+                    onChange={this.handleChangeMin.bind(this)}>
+                  </Input>
+                  <Extra>Minutes</Extra>
+                </TimeInputs>
+                <Button onClick={this.getTimeRemaining}>Let's do it</Button>
+                </QuestionBG>
+              </QuestionBlock>
+              :
+              <QuestionBlock>
+                <DoIt>I need to {this.state.activity}</DoIt>
+                <CountDown>
+                  {this.state.remainingMinutes > 9 ?
+                    this.state.remainingMinutes : '0' + this.state.remainingMinutes
+                  }:{
+                    this.state.remainingSeconds > 9 ?
+                      this.state.remainingSeconds : '0' + this.state.remainingSeconds}
+                </CountDown>
+              </ QuestionBlock>
+            }
 
 
 
-        </Content>
-      </AppBox>
+
+
+          </Content>
+        </AppBox>
       </MainBox>
     );
   }

@@ -102,27 +102,36 @@ export const BubbleText = styled.p`
     font-family: Rancho, Caveat,cursive;
     font-size: 2em;
     margin: 0;
+    line-height: 0.8em;
 `;
 
 export const QuestionBlock = styled.div`
-    display: flex;
-    flex-direction: column;
     width: 40vw;
     max-width: 500px;
 `;
 
+export const QuestionBG = styled.div`
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+`;
+
 export const Question = styled.h3`
     margin: 0;
-    font-family: Kalam;
-    font-size: 1.2em;
+    font-family: Rancho, Kalam, Arial;
+    font-size: 1.6em;
 `;
 
 export const TextInput = styled.input`
     padding: 5px 10px;
-    background-color: #fff;
+    background-color: rgba(128,116,174,0.2);
     border: none;
+    border-bottom: 2px solid #4C38AC;
     margin-bottom: 20px;
-    font-family: Caveat,Arial;
+    font-family: Rancho, Caveat,cursive;
     font-size: 1.5em;
 `;
 
@@ -135,39 +144,49 @@ export const TimeInputs = styled.div`
 export const Input = styled.input`
     padding: 0px 0px 0px 10px;
     margin-right: 5px;
-    background-color: #fff;
-    max-width: 60px;
     border: none;
+    background-color:  rgba(128,116,174,0.2);
+    border-bottom: 2px solid #4C38AC;
+    max-width: 60px;
     font-size: 1.5em;
-    font-family: Caveat,Arial;
+    font-family: Rancho, Caveat,cursive;
 `;
 
 export const Button = styled.button`
     margin-top: 20px;
-    height: 40px;
+    padding: 10px;
     border: none;
-    font-family: Permanentmarker;
+    border-radius: 8px;
+    font-family: Bangers, Impact;
     font-size: 1.6em;
-    box-shadow: 3px 3px 3px grey;
+    background-color: #4F21AD;
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    &:hover {
+        background-color: #D49AFF; 
+        box-shadow: none;
+    }
 `;
 
 export const DoIt = styled.h3`
     margin: 0;
-    font-family: Kalam;
+    font-family: Rancho, Kalam, Arial;
     font-size: 2em;
     text-align: center;
+    color: #fff;
 `;
 
 
 export const CountDown = styled.div`
-    font-family: Kalam;
+    font-family: Rancho, Kalam, Arial;
     text-align: center;
-    font-size: 7em;
-    margin-top: -20px;
+    font-size: 10em;
+    margin-top: -25px;
+    color: #fff;
 `;
 
 export const Extra = styled.span`
     margin:0;
     margin-right: 20px;
-    font-family: Kalam;
+    font-family: Rancho, Kalam, Arial;
 `;
