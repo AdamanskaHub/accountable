@@ -1,7 +1,7 @@
 import styled, {keyframes} from 'styled-components';
 
 export const MainBox = styled.div`
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     background-color: #4C38AC;
     background: linear-gradient(to right bottom, #4C38AC, #BE58CF);
@@ -11,53 +11,84 @@ export const MainBox = styled.div`
 export const AppBox = styled.div`
     display: flex;
     flex-direction: column;
-    // @media (max-width : 700px) {
-    //     padding: 0 10px;
-    // }
+    z-index: 666;
+    position: relative;
 `;
 
-// export const CloudsBox = styled.div`
-//     height: 100%;
-//     width: 100%;
-//     position: absolute;
-// `;
+export const CloudsBox = styled.div`
+height: 100%;
+width: 100vw;
+position: absolute;
+`;
 
-// export const Cloud1 = styled.div`
-//     top: 5%;
-//     left: 20%; 
-//     // max-width: 200px;
-//     position: relative;
-//     // background-image: url(${props => props.img});
-//     `;
+export const Cloud1 = styled.div`
+top: 5%;
+right: 20%;
+/* max-width: 650px; */
+min-width: 480px;
+height: 60px;
+position: absolute;
+background-repeat: no-repeat;
+z-index: 11
+    background-image: url(${props => props.img});
+    `;
 
-// export const Cloud2 = styled.img`
-//     top: 10%;
-//     left: 60%;
-//     max-width: 250px;
-//     position: relative;
-// `;
+export const Cloud2 = styled.div`
+top: 25%;
+    left: -10%;
+    width: 300px;
+    height: 40px;
+    position: absolute;
+    z-index: 12;
+    background-repeat: no-repeat;
+    background-image: url(${props => props.img});
+`;
 
-// export const Cloud3 = styled.img`
-//     top: 40%;
-//     left: -10%;
-//     position: relative;
-// `;
+export const Cloud3 = styled.div`
+top: 45%;
+left: 0%;
+width: 110px;
+height: 100px;
+position: absolute;
+z-index: 13;
+background-repeat: no-repeat;
+    background-image: url(${props => props.img});
+`;
 
-// export const Cloud4 = styled.img`
-//     top: 50%;
-//     left: 30%;
-//     position: relative;
-// `;
+export const Cloud4 = styled.div`
+top: 30%;
+right: 0;
+height: 100px;
+width: 250px;
+position: absolute;
+z-index: 14;
+background-repeat: no-repeat;
+    background-image: url(${props => props.img});
+`;
 
-// export const Cloud5 = styled.img`
-//     top: 65%;
-//     left: 20%;
-//     position: relative;
-// `;
+export const Cloud5 = styled.div`
+top: 40%;
+    right: 20%;
+    width: 244px;
+    position: absolute;
+    background-repeat: no-repeat;
+    height: 100px;
+    background-image: url(${props => props.img});
+`;
+
+// =========== C O N T E N T ==========
 
 export const Content = styled.div`
     display: flex;
     justify-content: space-around;
+    flex-direction: row;
+    @media (max-width : 700px) {
+        justify-content: center;
+        flex-direction: column-reverse;
+        -webkit-box-pack: space-around;
+        -ms-flex-pack: space-around;
+        align-items: center;
+    }
 `;
 
 export const Title = styled.h1`
@@ -74,10 +105,14 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: flex-end;
     width: 40vw;
+    @media (max-width : 700px) {
+        width: 60vw;
+        align-items: center;
+    }
 `;
 
 export const BossImage = styled.img`
-max-height: 460px;
+    max-height: 460px;
 `;
 
 export const BossBubble = styled.div`
@@ -96,6 +131,10 @@ export const Triangle = styled.div`
     margin-right: 15px;
     border-top: 13px solid #fff;
     // box-shadow: -3px 3px 3px grey;
+    @media (max-width : 700px) {
+        margin-left:30px;
+    }
+    
 `;
 
 export const BubbleText = styled.p`
@@ -108,6 +147,10 @@ export const BubbleText = styled.p`
 export const QuestionBlock = styled.div`
     width: 40vw;
     max-width: 500px;
+    margin-bottom: 30px;
+    @media (max-width : 700px) {
+        width: 60vw;
+    }
 `;
 
 export const QuestionBG = styled.div`

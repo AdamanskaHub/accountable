@@ -6,6 +6,7 @@ import CloudImg3 from "./img/cloud3.png";
 import CloudImg4 from "./img/cloud4.png";
 import CloudImg5 from "./img/cloud5.png";
 import Wizard from "./img/bossywizard.png";
+import AnimatedWizard from "./img/bossywizard.gif";
 // "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/bossywizard.png"
 import {
   MainBox, AppBox,
@@ -206,15 +207,16 @@ class App extends Component {
 
 
   render() {
+    console.log(CloudImg1)
     return (
       <MainBox>
-        {/* <CloudsBox>
-          <Cloud1></Cloud1>
-          {/* <Cloud2 src={CloudImg2} alt="cloud"/>
-          <Cloud3 src={CloudImg3} alt="cloud"/>
-          <Cloud4 src={CloudImg4} alt="cloud"/>
-          <Cloud5 src={CloudImg5} alt="cloud"/> 
-        </CloudsBox> */}
+        <CloudsBox>
+          <Cloud1 img={CloudImg1} ></Cloud1>
+          <Cloud2 img={CloudImg2} ></Cloud2>
+          <Cloud3 img={CloudImg3} ></Cloud3>
+          <Cloud4 img={CloudImg4} ></Cloud4>
+          {/* <Cloud5 img={CloudImg5} ></Cloud5> */}
+        </CloudsBox>
         <AppBox>
 
           <Title>Fucking do it now</Title>
