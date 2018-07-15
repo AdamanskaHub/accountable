@@ -1,5 +1,17 @@
 import styled, {keyframes} from 'styled-components';
 
+const slowMo = keyframes`
+    0% {transform:translate(0px,0px);}
+    50% {transform:translate(10px,0px);}
+    100% {transform:translate(0px,0px);}
+`;
+
+const opacityMo = keyframes`
+    0% {opacity:60%;}
+    50% {opacity:100%;}
+    100% {opacity:60%;}
+`;
+
 export const MainBox = styled.div`
     min-height: 100%;
     width: 100%;
@@ -31,6 +43,8 @@ position: absolute;
 background-repeat: no-repeat;
 z-index: 11
     background-image: url(${props => props.img});
+
+    animation: ${slowMo} 8s ease-in-out infinite;
     `;
 
 export const Cloud2 = styled.div`
@@ -42,6 +56,8 @@ top: 25%;
     z-index: 12;
     background-repeat: no-repeat;
     background-image: url(${props => props.img});
+    animation: ${opacityMo} 3s ease-in-out infinite;
+    animation: ${slowMo} 10s ease-in-out infinite
 `;
 
 export const Cloud3 = styled.div`
@@ -64,6 +80,7 @@ position: absolute;
 z-index: 14;
 background-repeat: no-repeat;
     background-image: url(${props => props.img});
+    animation: ${slowMo} 6s ease-in-out infinite
 `;
 
 export const Cloud5 = styled.div`
