@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 export const MainBox = styled.div`
     height: 100%;
@@ -152,34 +152,6 @@ export const Input = styled.input`
     font-family: Rancho, Caveat,cursive;
 `;
 
-export const Button = styled.button`
-    margin-top: 20px;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    font-family: Bangers, Impact;
-    font-size: 1.6em;
-    background-color: #4F21AD;
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.4);
-    color: #fff;
-    &::before {
-        transform: translate(-120%,-50%) translateZ(0)
-    }
-    
-
-  &:hover{
-    &::before {
-        transform: translate(-45%,-34%) translateZ(0)
-      }
-  }
- 
-    
-    // &:hover {
-    //     background-color: #D49AFF; 
-    //     box-shadow: none;
-    // }
-`;
-
 export const DoIt = styled.h3`
     margin: 0;
     font-family: Rancho, Kalam, Arial;
@@ -201,4 +173,73 @@ export const Extra = styled.span`
     margin:0;
     margin-right: 20px;
     font-family: Rancho, Kalam, Arial;
+`;
+
+// ========== F L I P ============
+
+export const Flip3d = styled.div`
+    margin-top: 20px;
+    cursor: pointer;
+    -webkit-letter-spacing: 2px;
+    -moz-letter-spacing: 2px;
+    -ms-letter-spacing: 2px;
+    letter-spacing: 2px;
+    height: 45px;
+    -webkit-perspective: 1000;
+    -ms-perspective: 1000;
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -ms-perspective: 1000;
+    perspective: 1000; 
+`;
+
+export const Flipper = styled.div`
+    transition: all .5s ease-in-out;
+    -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+
+    position: relative;
+
+    transform-origin: 100% 22.5px;
+
+    &:hover {
+        transform: rotateX(90deg);
+    }
+`;
+
+export const FrontButton = styled.div`
+    transform: translateZ(22.5px);
+    height: 45px;
+    border: none;
+    border-radius: 2px;
+    font-family: Bangers, Impact;
+    font-size: 1.6em;
+    background-color: #4F21AD;
+    color:#fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const BackButton = styled.div`
+    -webkit-transform: rotateX(90deg) translateZ(22.5px);
+    -ms-transform: rotateX(90deg) translateZ(22.5px); 
+    transform: rotateX(90deg) translateZ(22.5px);
+    height: 45px;
+    border: none;
+    border-radius: 2px;
+    font-family: Bangers, Impact;
+    font-size: 1.6em;
+    background-color: #4F21AD;
+    color:#fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+`;
+
+export const BackText = styled.span`
+    -webkit-transform: rotateX(90deg) translateZ(22.5px);
+    -ms-transform: rotateX(90deg) translateZ(22.5px); 
+    transform: rotateX(180deg) ;
 `;

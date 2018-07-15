@@ -12,7 +12,8 @@ import {
   CloudsBox, Cloud1, Cloud2, Cloud3, Cloud4, Cloud5,
   Content, Title, Container,
   BossImage, BubbleText, BossBubble, Triangle, QuestionBlock, QuestionBG,
-  Question, TextInput, TimeInputs, Extra, Input, Button, CountDown, DoIt,
+  Flip3d, Flipper, FrontButton, BackButton, BackText,
+  Question, TextInput, TimeInputs, Extra, Input, CountDown, DoIt,
 } from './components';
 
 
@@ -255,7 +256,15 @@ class App extends Component {
                   </Input>
                   <Extra>Minutes</Extra>
                 </TimeInputs>
-                <Button onClick={this.getTimeRemaining}>Let's do it</Button>
+
+                <Flip3d onClick={this.getTimeRemaining}>
+                  <Flipper>
+                    <FrontButton>Time to hustle</FrontButton>
+                    <BackButton>
+                      <BackText>Let's do it</BackText></BackButton>
+                  </Flipper>
+                </Flip3d>
+
                 </QuestionBG>
               </QuestionBlock>
               :
