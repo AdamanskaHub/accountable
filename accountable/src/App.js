@@ -6,10 +6,14 @@ import CloudImg3 from "./img/cloud3.png";
 import CloudImg4 from "./img/cloud4.png";
 import CloudImg5 from "./img/cloud5.png";
 import Wizard from "./img/bossywizard.png";
+import Bear from "./img/bear.png";
+import WizardSmile from "./img/bossywizard-smirk.png";
+import BearSmile from "./img/bearh.png";
 import AnimatedWizard from "./img/bossywizard.gif";
 // "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/bossywizard.png"
 import {
   MainBox, AppBox,
+  BearChoice, WizardChoice, Choice,
   CloudsBox, Cloud1, Cloud2, Cloud3, Cloud4, Cloud5,
   Content, Title, Container,
   BossImage, BubbleText, BossBubble, Triangle, QuestionBlock, QuestionBG,
@@ -54,6 +58,8 @@ class App extends Component {
 
   constructor() {
     super();
+    this.bearChosen = this.bearChosen.bind(this);
+    this.wizardChosen = this.wizardChosen.bind(this);
     this.showNotifications = this.showNotifications.bind(this);
     this.handleNot = this.handleNot.bind(this);
 
@@ -81,6 +87,8 @@ class App extends Component {
       almostTimeUp: [],
       selected: "I hope you're ready to act.",
       countingDown: false,
+      wizardChosen: true,
+      smile: false,
     };
   }
 
@@ -90,28 +98,81 @@ class App extends Component {
       "Are you ready to give it your all?",
       "Glad to see you're ready to work.",
       "Less talk more action.",
+      "Now it's just about doing it.",
     ]
     this.setState({ intro })
+    const bearIntro = [ //smile
+      "I'll be with you.",
+      "We are going to smash this task.",
+      "The first step is taken, keep going!",
+      "Go for it, it's the hardest part.",
+    ]
+    this.setState({ bearIntro })
 
     const dialog = [ //angry
       "You're giving it 100%? Give it 120%!",
       "Focus on a single task and let nothing stop you!",
+      "Just keep at it.",
+      "Don't be discouraged and stay focused.",
+      "It's not going to do itself.",
+      "That's the one thing you got to finish now.",
+      "You know what you should do, so do it.",
+      "Don't think, just act.",
+      "If it's hard, take it from the top, deconstruct.",
+      "Encountering a defeat is not being defeated.",
+      "As my witch friend says 'Hustle'.",
+      "You know you'll be glad once it's done.",
+      "Show me your determination.",
+      "You're being stopped by obstacles in your mind.",
     ]
     this.setState({ dialog })
+    const bearDialog = [ //angry
+      "If you feel overwhelmed, start with something small.",
+      "Just focus and keep at it.",
+      "You have the will to stay on task.",
+      "It's not easy but you'll be proud of yourself later.",
+      "You're strong enough to keep at it.",
+      "Nothing can stop you, believe in yourself.",
+      "What's important is to keep doing it.",
+      "Show me your grit.",
+      "We both know you have it in you.",
+      "You'll feel great once it's done.",
+      "My bear friend would say 'Ganbare!'",
+      "Fighting!",
+      "Have confidence in yourself.",
+      "You might find it hard now, but don't stop.",
+    ]
+    this.setState({ bearDialog })
 
     const wellDone = [ //smile
       "Alright! We're done!",
       "I hope you're proud of yourself.",
+      "See you soon I hope.",
+      "Ready for round 2 ?",
     ]
     this.setState({ wellDone })
+    const greatJob = [ //smile
+      "I'm proud of you",
+      "You did great.",
+      "You've improved as a person.",
+      "You deserve a little break now.",
+    ]
+    this.setState({ greatJob })
 
     const almostTimeUp = [ //angry
       "Time is almost up. Last push!",
       "Almost done? Keep going!",
+      "Now is not the time to give up!",
+      "You almost made it. Keep pushing.",
     ]
     this.setState({ almostTimeUp })
-
-
+    const almostBearTimeUp = [ //angry
+      "We're almost there.",
+      "Just a little bit more.",
+      "I can see the finish line.",
+      "You did great so far.",
+    ]
+    this.setState({ almostBearTimeUp })
   }
 
   showNotifications() {
@@ -126,7 +187,7 @@ class App extends Component {
   // =============== P O P U P ==================
 
   gotNewNotification(text, img) { // empty is target webaddress
-    Notifier.start("Hey you!", text, "", img);
+    Notifier.start("Hey!", text, "", img);
   }
 
   // =============== C O U N T D OW N ==================
@@ -143,7 +204,10 @@ class App extends Component {
       // , () => {console.log("TOTAL", this.state.seconds)}
     );
     this.setState({ initialSeconds: seconds, start: true, countingDown: true });
-    this.textChoice("intro");
+    if (this.state.wizardChosen) {
+    this.textChoice("intro"); } else {
+      this.textChoice("bearIntro");
+    }
     // After one second take out one second
     setTimeout(this.takeOutOneSec, 1000)
 
@@ -151,19 +215,30 @@ class App extends Component {
 
   takeOutOneSec() {
     if (this.state.seconds === 0) { //  T I M E   I S   U P
-      this.setState({ minutes: "", hours: "", closing: false, middle: false, start: false, done: true, countingDown: false })
-      this.textChoice("wellDone");
+      this.setState({ minutes: "", hours: "", closing: false, middle: false, start: false, done: true, countingDown: false, smile: false })
+      if (this.state.wizardChosen) {
+        this.textChoice("wellDone");
+      } else {
+        this.textChoice("greatJob");
+      }
+      
       return
     } else {
       this.setState({ seconds: this.state.seconds - 1 })
       // checking where we are in the time
       if (this.state.seconds === this.state.initialSeconds - 900 && this.state.seconds !== 900) {
-        this.textChoice("dialog");// AAAAAAAAAAA_AAAAAAAAH !
+        if (this.state.wizardChosen) {
+        this.textChoice("dialog");} else {
+          this.textChoice("bearDialog");
+        }
         this.setState({ initialSeconds: this.state.seconds })
       }
       if (this.state.seconds === 900) {
-        this.textChoice("almostTimeUp");
-        this.setState({ closing: true, middle: false })
+        if (this.state.wizardChosen) {
+        this.textChoice("almostTimeUp");} else {
+          this.textChoice("almostBearTimeUp");
+        }
+        this.setState({ closing: true, middle: false, smile: true })
       }
       this.updateDisplayedTime()
     }
@@ -184,9 +259,13 @@ class App extends Component {
   textChoice(choice) {
     let random = this.state[choice][Math.floor(Math.random() * this.state[choice].length)];
     this.setState({ selected: random })
-    if (activeTab === false) {
+    if (activeTab === false && this.wizardChosen) {
       this.gotNewNotification(random, "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/wizardhead.png")
-    }
+    } 
+    if (activeTab === false && !this.wizardChosen) {
+      this.gotNewNotification(random, "https://raw.githubusercontent.com/AdamanskaHub/accountable/master/accountable/src/img/bearhead.png")
+    } 
+
 
   }
 
@@ -204,10 +283,19 @@ class App extends Component {
     this.setState({ activity: event.target.value })
   }
 
+  // =============== C H A R A C T E R =====================
+
+  bearChosen() {
+    this.setState({ wizardChosen: false }, () => {console.log("wizard", this.state.wizardChosen)})
+  }
+
+  wizardChosen() {
+    this.setState({ wizardChosen: true })
+  }
+
 
 
   render() {
-    console.log(CloudImg1)
     return (
       <MainBox>
         <CloudsBox>
@@ -220,6 +308,11 @@ class App extends Component {
         <AppBox>
 
           <Title>Fucking do it now</Title>
+          <Choice>With
+            <WizardChoice onClick={this.wizardChosen}> the bossy wizard </WizardChoice>
+            or
+            <BearChoice onClick={this.bearChosen}> the cute satanistic bear</BearChoice>
+          </Choice>
 
           <Content>
 
@@ -228,9 +321,16 @@ class App extends Component {
                 <BubbleText>{this.state.selected}</BubbleText>
               </BossBubble>
               <Triangle></Triangle>
-              <BossImage src={Wizard} alt="Wizard"
-              //https://www.fightersgeneration.com/np7/char/hayato-rs-bust.png 
-              />
+              {this.state.wizardChosen && this.state.smile ?
+              <BossImage src={ WizardSmile } alt="Wizard" />:null}
+              {this.state.wizardChosen && !this.state.smile ?
+              <BossImage src={ Wizard } alt="Wizard" />:null
+              }
+              {!this.state.wizardChosen && this.state.smile ?
+              <BossImage src={ BearSmile } alt="Bear" />:null
+              } {!this.state.wizardChosen && !this.state.smile ?
+              <BossImage src={ Bear } alt="Bear" />:null
+              }
             </Container>
 
             {!this.state.countingDown ?

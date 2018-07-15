@@ -2,7 +2,7 @@ import styled, {keyframes} from 'styled-components';
 
 const slowMo = keyframes`
     0% {transform:translate(0px,0px);}
-    50% {transform:translate(10px,0px);}
+    50% {transform:translate(15px,0px);}
     100% {transform:translate(0px,0px);}
 `;
 
@@ -80,7 +80,7 @@ position: absolute;
 z-index: 14;
 background-repeat: no-repeat;
     background-image: url(${props => props.img});
-    animation: ${slowMo} 6s ease-in-out infinite
+    // animation: ${slowMo} 6s ease-in-out infinite
 `;
 
 export const Cloud5 = styled.div`
@@ -109,19 +109,43 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.h1`
-    margin-bottom: 60px;
     text-align: center;
     font-family: Bangers,Impact;
     color: #D49AFF;
     letter-spacing: 0.05em;
     font-size: 3em;
+    margin-bottom: 0;
+`;
+
+export const Choice = styled.div`
+    margin-bottom: 60px;
+    text-align: center;
+    font-family: Rancho,Kalam,Arial;
+    color: #D49AFF;
+    letter-spacing: 0.05em;
+    font-size: 1.3em;
+`;
+
+export const WizardChoice = styled.span`
+    cursor: pointer;
+    color: rgba(255,255,255,0.8);
+    &:hover {
+        color: #D49AFF;  
+    }
+`;
+
+export const BearChoice = styled.span`
+    cursor: pointer;
+    color: rgba(255,255,255,0.8);
+    &:hover {
+        color: #D49AFF;  
+    }
 `;
 
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    width: 40vw;
     @media (max-width : 700px) {
         width: 60vw;
         align-items: center;
